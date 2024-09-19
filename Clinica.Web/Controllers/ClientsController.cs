@@ -57,9 +57,9 @@ namespace Clinica.Web.Controllers
             {
                 _context.Add(client);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));    // ***** RETORNA PARA A VIEW DO CLIENTE *****
             }
-            return View(client);
+            return View(client); // ***** O "CLIENT" ESTÁ NO PARÂMETRO PARA CASO ALGO NÃO ESTEJA CORRETO, MANTEM-SE O QUE JÁ FOI INSERIDO *****
         }
 
         // GET: Clients/Edit/5
@@ -70,7 +70,7 @@ namespace Clinica.Web.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Clients.FindAsync(id);
+            var client = await _context.Clients.FindAsync(id);     // ***** VERIFICO NOVAMENTE CASO ESTEJAMOS TRABALHANDO SIMULTANEAMENTE E ALGUEM O APAGUE *****
             if (client == null)
             {
                 return NotFound();
@@ -99,7 +99,7 @@ namespace Clinica.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClientExists(client.Id))
+                    if (!ClientExists(client.Id))         // ***** VERIFICO NOVAMENTE CASO ESTEJAMOS TRABALHANDO SIMULTANEAMENTE E ALGUEM O JA TENHA APAGADO *****
                     {
                         return NotFound();
                     }
